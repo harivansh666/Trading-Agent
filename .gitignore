@@ -4,4 +4,3 @@ build
 .git
 .env
 Dockerfile
-docker-compose.yml

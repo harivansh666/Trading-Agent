@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  client:
+    build:
+      context: ./client # “Docker, mere client folder ko utha lo, isme Dockerfile search karo, aur image build karo.”
+      dockerfile: Dockerfile # Mere client folder ke andar jo Dockerfile hai, use chalake image build karo.
+    container_name: server-trading-agent
+    ports:
+      - 3001:3001
+    depends_on:
+      - server # pehla server nu chla fir km kr agge Tells Docker Compose that this service should start after another service.  ---Client container ko start karne se pehle server container ko start kar do.
+    networks:
+      - trading-agent-networks
+
+  server:
+    build: ./server
+    container_name: server-trading-agent
+    ports:
+      - 3000:3000
+    networks:
+      - trading-agent-networks
+
+networks:
+  trading-agent-networks:
+    driver: bridge
